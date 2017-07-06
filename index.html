@@ -1,54 +1,70 @@
+<!DOCTYPE html>
 <html>
-<head>
-	<title>Javascript Demo</title>
-	<style>
-		body {
-			background-color:black;
-			font-family: monospace;
-			color:white;
-			font-size:50px;
-			text-align: center;
-			margin-top:20%;
-		}
-		#magic{
-			color: #777;
-			border-right: 1px solid #777;
-			padding-right: 7px;
-			display: inline;
-		}
-	</style>
-</head>
-<body>
-
-	Coding is <div id="magic"></div>
-
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+  </head>
+  <body>
+  </body>
   <script>
-  		( function () {
-  			var words = ["fun", "exciting", "about not giving up", "being helpful", "being open", "what I learned at CodingDojo!"],
-  			el = document.getElementById('magic'),
-  			word_counter = 0,
-  			character_counter = 0;
-  		function updateText()
-  		{	if (words[word_counter][character_counter] == ' '){
-  			el.innerHTML += '&nbsp';
-  			character_counter++;
-  		}
-  		else {
-  			el.innerHTML = el.innerHTML+words[word_counter][character_counter++];
-  		}
-  			if(character_counter == words[word_counter].length+1)
-  			{
-  				word_counter++; 	//choose a different word
-  				character_counter = 0;	//start over with the first character of the word
-  				el.innerHTML = '';  //set the html to be blank
-  				//if we're displaying the last word, go back to the first word
-  				if(word_counter == words.length+1)
-  					word_counter = 0;
-  			}
-  		}
-  		setInterval(updateText,300);
-  	}) ();
-  		console.log(words);
-	</script>
-</body>
+    function Ninja(name)
+    {
+      this.name = name;
+      this.health = 100;
+      this.speed = 3;
+      this.strength = 3;
+
+      this.sayName = function()
+      {
+        console.log("Ninja " + this.name + " is ready.");
+        return this;
+      }
+      this.showStats = function()
+      {
+        console.log(this.name + "'s current health is: " + this.health);
+        console.log(this.name + "'s current speed is: " + this.speed);
+        console.log(this.name + "'s current strength is: " + this.strength);
+        return this;
+      }
+      this.drinkSake = function()
+      {
+        this.health += 10;
+        console.log(this.name + " drank some sake.");
+        return this;
+      }
+      this.punch = function(ninja)
+      {
+        if(ninja instanceof Ninja)
+        {
+          ninja.health -= 5;
+          console.log(ninja.name + " was punched by " + this.name + " and lost 5 health!");
+        }
+        else
+        {
+          console.log("You must pass in a Ninja instance!");
+        }
+      }
+      this.kick = function(ninja)
+      {
+        if(ninja instanceof Ninja)
+        {
+          var healthSubtract = this.strength * 5;
+          ninja.health -= healthSubtract;
+          console.log(ninja.name + " was kicked by " + this.name + " and lost " + healthSubtract + " health!");
+        }
+        else
+        {
+          console.log("You must pass in a Ninja instance!");
+        }
+      }
+    }
+    var ryu = new Ninja("Ryu");
+    var goku = new Ninja("Goku");
+    ryu.sayName().showStats().drinkSake();
+    goku.sayName().showStats().drinkSake();
+    ryu.punch(goku);
+    goku.kick(ryu);
+    ryu.showStats();
+    goku.showStats();
+  </script>
 </html>
