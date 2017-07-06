@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    class Card
+    {
+      constructor(suit, val)
+      {
+        if(val > 1 && val < 11)
+        {
+          this.stringVal = val;
+        }
+        else if(val == 11)
+        {
+          this.stringVal = "Jack";
+        }
+        else if(val == 12)
+        {
+          this.stringVal = "Queen";
+        }
+        else if(val == 13)
+        {
+          this.stringVal = "King";
+        }
+        else if(val == 1)
+        {
+          this.stringVal = "Ace";
+        }
+        else
+        {
+          this.stringVal = "Joker";
+        }
+        this.suit = suit;
+        this.val = val;
+      }
+    }
+
+    class Deck
+    {
+      constructor(){
+        this.Reset();
+      }
+      Deal()
+      {
+        let returnCard = this.deck[0];
+        this.deck.shift();
+        return returnCard;
+      }
+      Shuffle()
+      {
+        for(var i = 0; i < this.deck.length; i++ )
+        {
+          let randInt = Math.floor(Math.random() * this.deck.length);
+          var tempCard = this.deck[randInt];
+          this.deck[randInt] = this.deck[i];
+          this.deck[i] = tempCard;
+        }
+        return this;
+      }
+      Reset()
+      {
+        var buildDeck = [];
+        var suitArray = ['Hearts', 'Clubs', 'Spades', 'Diamonds'];
+        for(var suit in suitArray)
+        {
+          for(var i = 1; i < 14; i++)
+          {
+            var newCard = new Card(suitArray[suit], i);
+            buildDeck.push(newCard);
+          }
+        }
+        this.deck = buildDeck;
+        return this;
+      }
+    }
+
+    class Player
+    {
+      constructor(name)
+      {
+        this.name = name;
+        this.hand = [];
+      }
+      takeCard(Deck)
+      {
+        let dealtCard = Deck.Deal();
+        this.hand.push(dealtCard);
+        return this;
+      }
+      discardCard(val)
+      {
+        val --;
+        let discardedCard = this.hand.splice(val);
+        return discardedCard;
+      }
+
+    }
+    let deck1 = new Deck();
+    let player1 = new Player("Matt Damon");
+    deck1.Shuffle();
+    player1.takeCard(deck1);
+    player1.takeCard(deck1);
+    player1.takeCard(deck1);
+    player1.takeCard(deck1);
+    player1.takeCard(deck1);
+    console.log(deck1);
+    console.log(player1);
+    player1.discardCard(5);
+    console.log(player1);
+
+  </script>
+</html>
